@@ -1,0 +1,211 @@
+:root {
+  --background: #101114;
+  --primary-color: #1c1d20;
+  --primary2-color: #232730;
+  --secondary-color: #4a4d57;
+  --accent-color: #00ffc4;
+  --text-color: #f9f9f9;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+body {
+  min-height: 100vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--background);
+}
+h1 {
+  margin-top: 100px;
+  margin-bottom: 20px;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--accent-color);
+}
+.stats {
+    width: 700px; /*desktop wdth*/
+    max-width: 100%; /*smaller devices with will be 100%*/
+    height: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-self:center;
+    gap: 10px;
+    margin-bottom: 2rem;
+
+  }
+.progressbar{
+    box-sizing: border-box; /* make sure box size remains the same even after adding padding border*/
+   
+    width: 90%; /* input covers the entire width of wrapper*/
+    border: 2px solid var(--secondary-color);
+    border-radius: 1000px;
+    overflow: hidden;
+  }.progress{
+    height: 100%;
+    width: 0%;
+    background: var(--accent-color);
+    border-radius: 1000px;
+  }
+  .progressnumber{
+   color: var(--accent-color);
+    display: flex; /* puts tick in centre to make it completely circle*/
+    justify-content: center;
+    align-items: center;
+ font-size: 2rem;
+ font-family: "Grenze Gotisch", serif; font-weight: 400;
+  }
+.wrapper {
+  width: 700px; /*desktop wdth*/
+  max-width: 100%; /*smaller devices with will be 100%*/
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.span{
+  color: red;
+  font-size: 0.7rem;
+  margin-left:2rem ;
+}
+#todo-input {
+  box-sizing: border-box; /* make sure box size remains the same even after adding padding border*/
+  padding: 12px 20px;
+  width: 100%; /* input covers the entire width of wrapper*/
+  background: none;
+  border: 2px solid var(--secondary-color);
+  border-radius: 1000px;
+  font: inherit;
+  color: var(--text-color);
+  caret-color: var(--accent-color); /* | curser color*/
+}
+#todo-input:focus {
+  outline: none; /* border doesnt highlights when clickd on focus area*/
+}
+form {
+  position: relative; /* to make button ancestor to form so that button is placed 0 ,0 in form not webpage*/
+}
+#add-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--accent-color);
+  height: 100%;
+  padding: 0 30px;
+  border: none;
+  border-radius: 1000px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--background);
+  cursor: pointer;
+}
+.todo {
+  margin-bottom: 10px;
+  padding: 0 16px;
+  background-color: var(--primary-color);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  cursor: grab;
+}
+.todo:hover{
+  transform: scale(1.05);
+  transition:all 0.5s;
+  background-color: var(--primary2-color);
+
+}
+li::marker {
+  content: "";
+}
+.todo .todo-text {
+  padding: 15px; /* above paddin was set to zero so that our checkbox label gets max clickable area as whole padding is covered by label*/
+  padding-right: 0;
+  flex-grow: 1; /* ensures that this element takes as much width as possible , as flext is given to todo so text will get all the available
+                 space while all other elements will be pushed to edges*/
+  transition: 200ms ease;
+}
+.edit-button {
+  padding: 3px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.edit-button svg {
+  transition: 200ms ease;
+}
+.edit-button:hover svg {
+  fill: #00c3ff;
+}
+.delete-button {
+  padding: 3px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.delete-button svg {
+  transition: 200ms ease;
+}
+.delete-button:hover svg {
+  fill: #ff0033;
+}
+.custom-checkbox {
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  min-height: 20px; /*for circle*/
+  min-width: 20px; /*for circle*/
+  display: flex; /* puts tick in centre to make it completely circle*/
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0; /*prevents it from squeezed by other flexbox element*/
+  transition: 200ms ease;
+}
+
+input[type="checkbox"]:checked ~ .custom-checkbox {
+  /*select actual checkbox using type checkbox then , if it is :checked then use 
+                                                      sibling selector to select custon checkbox to change style*/
+  background-color: var(--accent-color);
+}
+input[type="checkbox"]:checked ~ .custom-checkbox svg {/*makes svg visible when clicked*/
+   fill:var(--primary-color)
+  }
+.completed{/* makes text line through when clicked*/
+text-decoration: line-through;
+color: var(--secondary-color);
+   }
+   input[type="checkbox"] {
+display: none;  
+ }
+
+ @media (max-width:500px){
+    html{
+        font-size: 0.8rem;
+    }
+    #add-button{
+        position: unset;/* it unets the previous absolute setting */
+        width: 100%;
+        margin-top : 10px;
+        padding: 15px; 
+        height: auto;
+    }
+    h1{
+        margin-top: 50px;
+        font-size: 15vw;
+    }
+ }
+
+
+ 
+ 
