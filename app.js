@@ -142,7 +142,7 @@ updatetodo();
 
 
 const deletetask = (index) => {
-    // if(confirm('Are you sure you want to delete this task ?'))
+    if(confirm('Are you sure you want to delete this task ?'))
     AllTodo.splice(index, 1);
     updatetodo();
     savetask();
@@ -167,7 +167,10 @@ const edittask = (index) => {
             savetask();
         }, { once: true });
     }
-}
+}  /*i i got stuck in taskinput , as it was showing undefined , basically i had to put event listener and then perfrm my task .
+   use{once:true to call add event listener only once , without it my event listener was calling in loop , when i clicked the 
+  event it addedup as was run as many times event was clicke without refresh 
+  useed if statement in both action listener to specify which one to call  when }
 
 
 
