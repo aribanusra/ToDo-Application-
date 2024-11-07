@@ -15,13 +15,13 @@ function gettask() {
 
     }
     return JSON.parse(todos);
-    
-    
+
+
 }
 
 
 
-const AllTodo = gettask();
+let AllTodo = gettask();
 
 
 
@@ -29,7 +29,7 @@ function savetask() {
 
     localStorage.setItem('todo', JSON.stringify(AllTodo))  //only string values can be stored in local storage so we convert to json
 }
-console.log(AllTodo);
+
 
 
 
@@ -52,21 +52,29 @@ const updatestats = () => {
 
 //add button 
 
-
 addbutton.addEventListener("click", (e) => {
     e.preventDefault();
-    span.innerText = "";
-    addtask();
+
+    if (addbutton.innerText === "ADD") {
+        span.innerText = "";
+        addtask();
+    }
+
 });
 
 
 function addtask() {
     const text = taskinput.value.trim();
-    if (text) {
+    AllTodo = AllTodo || []
+    console.log(AllTodo.some(obj => obj.text === text));
+
+    // console.log(AllTodo.includes(text));  .includes works with only arrays but some works with array of objects  
+
+    if (text.length != 0 && !AllTodo.some(obj => obj.text === text)) {
         AllTodo.push({ text: text, completed: false })
     }
     else {
-        span.innerText = '*Please write a task before you add.'
+        span.innerText = '*Please write a new task before you add.   '
     }
     taskinput.value = "";
     updatetodo();
@@ -76,19 +84,24 @@ function addtask() {
 
 const toggletaskcomplete = (index) => {
     AllTodo[index].completed = !AllTodo[index].completed;
-    updatestats();
+
     updatetodo();
+
+    updatestats();
+
     savetask();
 }
 
 
 function updatetodo() {
     tasklist.innerHTML = "";
-    AllTodo.forEach((task, index) => {
-        const taskli = document.createElement("li");
+    if (AllTodo != null)
+        AllTodo.forEach((task, index) => {
+            const taskli = document.createElement("li");
 
-        taskli.innerHTML = `
-    <div class="todo ${task.completed ? 'completed' : ''}" draggable="true" >
+
+            taskli.innerHTML = `
+    <div class="todo" draggable="true">
                 <input type="checkbox" id="to-do${index}" ${task.completed ? "checked" : ""} />
                 <label for="to-do${index}" class="custom-checkbox">
                     <svg fill="transparent" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -99,7 +112,7 @@ function updatetodo() {
                 <label for="to-do${index}" class="todo-text  ${task.completed ? "completed" : ""}">
                 ${task.text}
                 </label>
-                <button class="edit-button" onclick="edittask(${index})">
+                <button class="${task.completed ? "edit-buttonchecked" : "edit-button "}" onclick="edittask(${index})">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#5f6368">
                         <path
@@ -116,11 +129,11 @@ function updatetodo() {
             </div>
         `;
 
-        taskli.addEventListener('change', () => toggletaskcomplete(index));
-        tasklist.append(taskli);
-        updatestats();
-        savetask();
-    })
+            taskli.addEventListener('change', () => toggletaskcomplete(index));
+            tasklist.append(taskli);
+            updatestats();
+            savetask();
+        })
 }
 
 updatetodo();
@@ -128,28 +141,34 @@ updatetodo();
 
 
 
-
 const deletetask = (index) => {
-
+    // if(confirm('Are you sure you want to delete this task ?'))
     AllTodo.splice(index, 1);
     updatetodo();
     savetask();
     updatestats();
 }
-
-
 
 
 
 
 const edittask = (index) => {
-    taskinput.value = AllTodo[index].text;
-    AllTodo.splice(index, 1);
-    updatetodo();
-    updatestats();
-    savetask();
+    addbutton.innerText = "EDIT";
+    console.log(index);
+    if (addbutton.innerText === "EDIT") {
+        taskinput.value = AllTodo[index].text;
+        addbutton.addEventListener('click', function editnow(e) {
 
+            console.log("h");
+            document.querySelectorAll('.todo-text')[index].innerText = taskinput.value;
+            AllTodo[index].text = taskinput.value
+            taskinput.value = "";
+            addbutton.innerText = 'ADD'
+            savetask();
+        }, { once: true });
+    }
 }
+
 
 
 

@@ -116,8 +116,8 @@ form {
   cursor: grab;
 }
 .todo:hover{
-  transform: scale(1.05);
-  transition:all 0.5s;
+  transform: scale(1.03);
+  transition:all 0.3s;
   background-color: var(--primary2-color);
 
 }
@@ -188,10 +188,15 @@ color: var(--secondary-color);
    input[type="checkbox"] {
 display: none;  
  }
-
+.edit-buttonchecked{
+  display: none!important
+}
  @media (max-width:500px){
     html{
         font-size: 0.8rem;
+    }
+    body{
+      padding: 1.5rem;
     }
     #add-button{
         position: unset;/* it unets the previous absolute setting */
